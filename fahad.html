@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fuck Him Game</title>
+    <style>
+        #container { display: flex; justify-content: center; align-items: center; height: 100vh; }
+        #victim { width: 200px; height: 300px; border: 3px solid red; object-fit: cover; }
+        #aggressor { width: 200px; height: 200px; border: 3px solid blue; object-fit: cover; }
+        button { font-size: 20px; padding: 15px; margin: 10px; }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <img id="victim" src="YOUR_PICTURE_URL_HERE">
+        <img id="aggressor" src="YOUR(aggressor)PICTURE_URL_HERE">
+        <div>
+            <button onclick="fuckHim()">FUCK HIM</button>
+            <button onclick="leaveHim()">LEAVE HIM</button>
+        </div>
+    </div>
+
+    <script>
+        function fuckHim() {
+            const victim = document.getElementById('victim');
+            victim.style.transform = 'scale(1.1)';
+            victim.style.filter = 'brightness(1.5)';
+            setTimeout(() => {
+                victim.style.transform = '';
+                victim.style.filter = '';
+            }, 500);
+        }
+
+        function leaveHim() {
+            const aggressor = document.getElementById('aggressor');
+            aggressor.style.transform = 'translateX(300px) rotate(30deg)';
+            setTimeout(() => {
+                aggressor.style.transform = '';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
