@@ -1,464 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Push Fight!</title>
-<style>
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
-html, body { width: 100%; height: 100%; background: #0f1923; font-family: -apple-system, BlinkMacSystemFont, sans-serif; overflow: hidden; }
-body { display: flex; flex-direction: column; }
-
-#topbar { display: flex; align-items: center; gap: 8px; padding: 8px 12px 4px; flex-shrink: 0; }
-.hb-side { flex: 1; min-width: 0; }
-.hb-name { font-size: 11px; font-weight: 600; color: #aaa; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.hb-name.right { text-align: right; }
-.hb-track { height: 14px; background: #1e2d3d; border-radius: 7px; overflow: hidden; }
-.hb-fill { height: 100%; border-radius: 7px; transition: width 0.15s, background 0.3s; }
-#vs { font-size: 11px; font-weight: 700; color: #555; padding: 0 6px; flex-shrink: 0; }
-
-.score-wrap { display: flex; justify-content: center; gap: 40px; padding: 2px 0 2px; flex-shrink: 0; }
-.score-num { font-size: 20px; font-weight: 700; color: #fff; text-align: center; line-height: 1; }
-.score-lbl { font-size: 10px; color: #555; text-align: center; }
-
-#arena-wrap { flex: 1; position: relative; min-height: 0; }
-#c { display: block; width: 100%; height: 100%; }
-
-#msg { text-align: center; font-size: 13px; font-weight: 600; color: #eee; padding: 3px 0; flex-shrink: 0; min-height: 20px; }
-
-#controls-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 12px; flex-shrink: 0; }
-.dpad { display: flex; gap: 8px; }
-.dbtn { width: 68px; height: 68px; border-radius: 50%; background: rgba(55,138,221,0.15); border: 2px solid rgba(55,138,221,0.35); display: flex; align-items: center; justify-content: center; font-size: 26px; color: #378ADD; user-select: none; -webkit-user-select: none; cursor: pointer; }
-.dbtn:active { background: rgba(55,138,221,0.35); }
-.rbtns { display: flex; gap: 8px; flex-direction: column; align-items: flex-end; }
-.abtn { height: 34px; padding: 0 16px; border-radius: 17px; border: 1.5px solid #333; background: #1a2332; color: #aaa; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
-.abtn.pri { border-color: #378ADD; color: #378ADD; }
-.abtn:active { background: #243040; }
-
-#sp { background: #111c28; border-top: 1px solid #1e2d3d; padding: 8px 12px 10px; overflow-y: auto; flex-shrink: 0; max-height: 38vh; }
-.ss { font-size: 10px; font-weight: 700; color: #378ADD; text-transform: uppercase; letter-spacing: 0.5px; margin: 8px 0 5px; }
-.sr { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
-.sl { font-size: 12px; color: #888; min-width: 95px; }
-.sr input[type=text] { flex: 1; min-width: 100px; background: #1a2332; border: 1px solid #263040; border-radius: 6px; color: #eee; font-size: 13px; padding: 5px 8px; outline: none; -webkit-appearance: none; }
-.sr input[type=range] { flex: 1; min-width: 80px; accent-color: #378ADD; }
-.sv { font-size: 12px; color: #eee; min-width: 24px; text-align: right; }
-.ub { background: #1a2332; border: 1px solid #263040; border-radius: 6px; color: #ccc; font-size: 12px; padding: 6px 10px; cursor: pointer; white-space: nowrap; -webkit-appearance: none; }
-.ub.red { color: #e24b4a; border-color: #3d1f1f; }
-.ip { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; border: 1.5px solid #263040; }
-.wp { width: 40px; height: 26px; border-radius: 4px; object-fit: cover; border: 1.5px solid #263040; }
-input[type=color] { width: 34px; height: 28px; border: none; padding: 0; cursor: pointer; background: none; border-radius: 6px; -webkit-appearance: none; }
-
-#win { display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.85); flex-direction: column; align-items: center; justify-content: center; z-index: 20; }
-#win.on { display: flex; }
-#wt { font-size: 30px; font-weight: 800; color: #fff; text-align: center; margin-bottom: 6px; }
-#ws { font-size: 14px; color: #aaa; text-align: center; margin-bottom: 22px; }
-#cc { position: absolute; inset: 0; pointer-events: none; }
-#wok { padding: 12px 40px; border-radius: 24px; background: #378ADD; border: none; color: #fff; font-size: 16px; font-weight: 700; cursor: pointer; position: relative; z-index: 21; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐭 happy birthday indur 🐭</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="title">🐭 indur's BIRTHDAY BASH 🐭</h1>
+            <p class="subtitle">Kaif er maire chu.... Assalamualaikum!</p>
+        </div>
+    </header>
 
-<div id="topbar">
-  <div class="hb-side"><div class="hb-name" id="ln1">Player 1</div><div class="hb-track"><div class="hb-fill" id="hb1" style="width:100%;background:#378ADD"></div></div></div>
-  <div id="vs">VS</div>
-  <div class="hb-side"><div class="hb-name right" id="ln2">Enemy</div><div class="hb-track"><div class="hb-fill" id="hb2" style="width:100%;background:#D85A30;float:right"></div></div></div>
-</div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <ul class="nav-list">
+            <li><a href="#gallery">Photos</a></li>
+            <li><a href="#videos">Videos</a></li>
+            <li><a href="#game">Play Game</a></li>
+            <li><a href="#messages">Messages</a></li>
+        </ul>
+    </nav>
 
-<div class="score-wrap">
-  <div><div class="score-num" id="sc1">0</div><div class="score-lbl" id="sl1">P1</div></div>
-  <div><div class="score-num" id="sc2">0</div><div class="score-lbl" id="sl2">Enemy</div></div>
-</div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Dellu tush! 🎉</h2>
+            <p> Sadi pudi lobon chudi! 🐭✨</p>
+        </div>
+    </section>
 
-<div id="arena-wrap">
-  <canvas id="c"></canvas>
-  <div id="win">
-    <canvas id="cc"></canvas>
-    <div id="wt">Player 1 Wins!</div>
-    <div id="ws">Tap Next Round</div>
-    <button id="wok" onclick="closeWin()">Next Round</button>
-  </div>
-</div>
+    <!-- Photo Gallery Section -->
+    <section id="gallery" class="gallery-section">
+        <h2>📸 Photo Gallery</h2>
+        <div class="gallery-container">
+            <div class="gallery-item">
+                <img src="rat_photo_1.jpg" alt="Birthday photo 1">
+                <p>Memory 1</p>
+            </div>
+            <div class="gallery-item">
+                <img src="rat_photo_2.jpg" alt="Birthday photo 2">
+                <p>Memory 2</p>
+            </div>
+            <div class="gallery-item">
+                <img src="rat_photo_3.jpg" alt="Birthday photo 3">
+                <p>Memory 3</p>
+            </div>
+            <div class="gallery-item">
+                <img src="rat_photo_4.jpg" alt="Birthday photo 4">
+                <p>Memory 4</p>
+            </div>
+            <div class="gallery-item">
+                <img src="rat_photo_5.jpg" alt="Birthday photo 5">
+                <p>Memory 5</p>
+            </div>
+            <div class="gallery-item">
+                <img src="rat_photo_6.jpg" alt="Birthday photo 6">
+                <p>Memory 6</p>
+            </div>
+        </div>
+    </section>
 
-<div id="msg">Tap Start to play!</div>
+    <!-- Videos Section -->
+    <section id="videos" class="videos-section">
+        <h2>🎬 Video Moments</h2>
+        <div class="videos-container">
+            <div class="video-item">
+                <video width="300" height="300" controls>
+                    <source src="rat_video_1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <p>Video 1</p>
+            </div>
+            <div class="video-item">
+                <video width="300" height="300" controls>
+                    <source src="rat_video_2.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <p>Video 2</p>
+            </div>
+            <div class="video-item">
+                <video width="300" height="300" controls>
+                    <source src="rat_video_3.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <p>Video 3</p>
+            </div>
+        </div>
+    </section>
 
-<div id="controls-row">
-  <div class="dpad">
-    <div class="dbtn" id="bl">&#8592;</div>
-    <div class="dbtn" id="br">&#8594;</div>
-  </div>
-  <div class="rbtns">
-    <button class="abtn pri" id="sb" onclick="startGame()">Start</button>
-    <button class="abtn" onclick="toggleSP()">&#9881; Settings</button>
-  </div>
-</div>
+    <!-- Game Section -->
+    <section id="game" class="game-section">
+        <h2>🎮 Play the Birthday Game</h2>
+        <div class="game-container" id="gameContainer">
+            <!-- Your game file will be loaded here -->
+            <p>Loading game...</p>
+        </div>
+    </section>
 
-<div id="sp">
-  <div class="ss">Players</div>
-  <div class="sr"><span class="sl">Your name</span><input type="text" id="n1" value="Player 1" oninput="applyS()"></div>
-  <div class="sr"><span class="sl">Enemy name</span><input type="text" id="n2" value="Enemy" oninput="applyS()"></div>
-  <div class="sr"><span class="sl">Your HP color</span><input type="color" id="c1" value="#378ADD" oninput="applyS()"></div>
-  <div class="sr"><span class="sl">Enemy HP color</span><input type="color" id="c2" value="#D85A30" oninput="applyS()"></div>
-  <div class="sr"><span class="sl">Max health</span><input type="range" id="mhp" min="50" max="300" step="10" value="100" oninput="applyS()"><span class="sv" id="mhpv">100</span></div>
-  <div class="ss">Photos</div>
-  <div class="sr">
-    <span class="sl">Your face</span>
-    <label class="ub">Upload <input type="file" accept="image/*" capture="environment" style="display:none" onchange="loadF('p1',this)"></label>
-    <img id="pv1" class="ip" style="display:none">
-    <button class="ub red" onclick="clrF('p1')">X</button>
-  </div>
-  <div class="sr">
-    <span class="sl">Enemy face</span>
-    <label class="ub">Upload <input type="file" accept="image/*" capture="environment" style="display:none" onchange="loadF('p2',this)"></label>
-    <img id="pv2" class="ip" style="display:none">
-    <button class="ub red" onclick="clrF('p2')">X</button>
-  </div>
-  <div class="sr">
-    <span class="sl">Your weapon</span>
-    <label class="ub">Upload <input type="file" accept="image/*" capture="environment" style="display:none" onchange="loadW(this)"></label>
-    <img id="pvw" class="wp" style="display:none">
-    <button class="ub red" onclick="clrW()">X</button>
-  </div>
-</div>
+    <!-- Messages Section -->
+    <section id="messages" class="messages-section">
+        <h2>💌 Birthday Messages</h2>
+        <div class="messages-container">
+            <div class="message-card">
+                <p class="message-text">🎉 delluuu boma!</p>
+                <p class="message-author">- sayem maderchod </p>
+            </div>
+            <div class="message-card">
+                <p class="message-text">Tukmin maderchod! 🐭✨</p>
+                <p class="message-author">- bokkor bainmas</p>
+            </div>
+            <div class="message-card">
+                <p class="message-text">Saimon gay maderchod! 🎂🎊</p>
+                <p class="message-author">- tamim er gusti chudi</p>
+            </div>
+        </div>
+    </section>
 
-<script>
-const canvas=document.getElementById('c'), ctx=canvas.getContext('2d');
-let W=1,H=1;
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Made with 🐭 and lots of love | Happy Birthday! 🎉</p>
+    </footer>
 
-function resize(){
-  const a=document.getElementById('arena-wrap');
-  W=a.clientWidth||window.innerWidth;
-  H=a.clientHeight||200;
-  canvas.width=W; canvas.height=H;
-  const cc=document.getElementById('cc');
-  cc.width=W; cc.height=H;
-}
-
-function setBodyHeight(){
-  document.body.style.height = window.innerHeight+'px';
-}
-setBodyHeight();
-window.addEventListener('resize',()=>{ setBodyHeight(); resize(); if(!gA) draw(); });
-window.addEventListener('orientationchange',()=>{ setTimeout(()=>{ setBodyHeight(); resize(); if(!gA) draw(); },200); });
-
-resize();
-
-const FRIC=0.80,GRAV=0.62,PUSH=9;
-const PW=28,PH=48;
-let pX,pY,pW,pH,GY;
-function calcPlat(){
-  pW=W*0.84; pX=(W-pW)/2;
-  pY=H*0.76; pH=14; GY=pY-PH;
-}
-
-let s1=0,s2=0,gA=false,keys={};
-let p1,p2,animId;
-let fi1=null,fi2=null,wi=null;
-let maxHP=100,hp1=100,hp2=100;
-let spOpen=true;
-let cfg={n1:'Player 1',n2:'Enemy',c1:'#378ADD',c2:'#D85A30'};
-let cParts=[],cAnim=null;
-
-const AC=window.AudioContext||window.webkitAudioContext;
-let ac=null;
-function gAC(){ try{ if(!ac) ac=new AC(); return ac; }catch(e){return null;} }
-
-function playPush(str){
-  try{
-    const a=gAC(); if(!a)return;
-    const o=a.createOscillator(),g=a.createGain();
-    o.connect(g);g.connect(a.destination);
-    const f=100+str*40;
-    o.frequency.setValueAtTime(f,a.currentTime);
-    o.frequency.exponentialRampToValueAtTime(f*0.25,a.currentTime+0.2);
-    g.gain.setValueAtTime(0.3,a.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.22);
-    o.type='sawtooth'; o.start(a.currentTime); o.stop(a.currentTime+0.22);
-  }catch(e){}
-}
-function playFall(){
-  try{
-    const a=gAC(); if(!a)return;
-    const o=a.createOscillator(),g=a.createGain();
-    o.connect(g);g.connect(a.destination);
-    o.frequency.setValueAtTime(380,a.currentTime);
-    o.frequency.exponentialRampToValueAtTime(55,a.currentTime+0.5);
-    g.gain.setValueAtTime(0.22,a.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.5);
-    o.type='sine'; o.start(a.currentTime); o.stop(a.currentTime+0.5);
-  }catch(e){}
-}
-function playWin(){
-  try{
-    const a=gAC(); if(!a)return;
-    [523,659,784,1047].forEach((f,i)=>{
-      const o=a.createOscillator(),g=a.createGain();
-      o.connect(g);g.connect(a.destination);
-      const t=a.currentTime+i*0.13;
-      o.frequency.setValueAtTime(f,t);
-      g.gain.setValueAtTime(0.18,t);
-      g.gain.exponentialRampToValueAtTime(0.001,t+0.28);
-      o.type='triangle'; o.start(t); o.stop(t+0.28);
-    });
-  }catch(e){}
-}
-
-function applyS(){
-  cfg.n1=document.getElementById('n1').value||'Player 1';
-  cfg.n2=document.getElementById('n2').value||'Enemy';
-  cfg.c1=document.getElementById('c1').value;
-  cfg.c2=document.getElementById('c2').value;
-  maxHP=parseInt(document.getElementById('mhp').value);
-  document.getElementById('mhpv').textContent=maxHP;
-  document.getElementById('ln1').textContent=cfg.n1;
-  document.getElementById('ln2').textContent=cfg.n2;
-  document.getElementById('sl1').textContent=cfg.n1;
-  document.getElementById('sl2').textContent=cfg.n2;
-  updateHB();
-}
-
-function toggleSP(){
-  const s=document.getElementById('sp');
-  spOpen=!spOpen;
-  s.style.display=spOpen?'':'none';
-  setTimeout(()=>{ resize(); if(!gA) draw(); },50);
-}
-
-function loadF(who,inp){
-  const file=inp.files&&inp.files[0];
-  if(!file)return;
-  const r=new FileReader();
-  r.onload=function(e){
-    const img=new Image();
-    img.onload=function(){
-      if(who==='p1'){fi1=img;const el=document.getElementById('pv1');el.src=img.src;el.style.display='';}
-      else{fi2=img;const el=document.getElementById('pv2');el.src=img.src;el.style.display='';}
-    };
-    img.src=e.target.result;
-  };
-  r.readAsDataURL(file);
-}
-function clrF(who){
-  if(who==='p1'){fi1=null;document.getElementById('pv1').style.display='none';}
-  else{fi2=null;document.getElementById('pv2').style.display='none';}
-}
-function loadW(inp){
-  const file=inp.files&&inp.files[0];
-  if(!file)return;
-  const r=new FileReader();
-  r.onload=function(e){
-    const img=new Image();
-    img.onload=function(){wi=img;const el=document.getElementById('pvw');el.src=img.src;el.style.display='';};
-    img.src=e.target.result;
-  };
-  r.readAsDataURL(file);
-}
-function clrW(){wi=null;document.getElementById('pvw').style.display='none';}
-
-function mkP(x,col,out){return{x,y:GY,vx:0,vy:0,onGround:true,col,out,pushing:false,pushDir:0,pushTimer:0};}
-
-function resetP(){
-  calcPlat();
-  p1=mkP(pX+70,cfg.c1,'#185FA5');
-  p2=mkP(pX+pW-70-PW,cfg.c2,'#993C1D');
-  hp1=maxHP;hp2=maxHP;updateHB();
-}
-
-function updateHB(){
-  const a=Math.max(0,Math.round(hp1/maxHP*100));
-  const b=Math.max(0,Math.round(hp2/maxHP*100));
-  const e1=document.getElementById('hb1'),e2=document.getElementById('hb2');
-  e1.style.width=a+'%';
-  e2.style.width=b+'%';
-  e1.style.background=a>50?cfg.c1:a>25?'#EF9F27':'#E24B4A';
-  e2.style.background=b>50?cfg.c2:b>25?'#EF9F27':'#E24B4A';
-}
-
-function startGame(){
-  if(animId) cancelAnimationFrame(animId);
-  gA=true; calcPlat(); resetP(); keys={};
-  document.getElementById('msg').textContent='Push the enemy off!';
-  document.getElementById('sb').textContent='Restart';
-  loop();
-}
-
-function loop(){ update(); draw(); if(gA) animId=requestAnimationFrame(loop); }
-
-function aiMove(){
-  if(!p1||!p2)return;
-  const d=(p1.x+PW/2)-(p2.x+PW/2);
-  if(Math.abs(d)>110) p2.vx+=d>0?0.55:-0.55;
-  else if(Math.abs(d)<38) p2.vx+=d>0?-0.3:0.3;
-  else p2.vx+=d>0?0.88:-0.88;
-}
-
-function update(){
-  if(!gA)return;
-  if(keys.left) p1.vx-=0.95;
-  if(keys.right) p1.vx+=0.95;
-  aiMove();
-  [p1,p2].forEach(p=>{
-    if(p.pushTimer>0)p.pushTimer--;else p.pushing=false;
-    p.vx*=FRIC;
-    if(!p.onGround)p.vy+=GRAV;
-    p.x+=p.vx; p.y+=p.vy;
-    const on=p.x+PW>pX&&p.x<pX+pW;
-    if(on&&p.y>=GY){p.y=GY;p.vy=0;p.onGround=true;}
-    else if(!on)p.onGround=false;
-    if(p.y>H+80){roundOver(p);return;}
-  });
-
-  const ol=p1.x<p2.x+PW&&p1.x+PW>p2.x&&p1.y<p2.y+PH&&p1.y+PH>p2.y;
-  if(ol){
-    const d=(p1.x+PW/2)<(p2.x+PW/2)?-1:1;
-    const spd=Math.abs(p1.vx)+Math.abs(p2.vx)+2;
-    const force=PUSH*spd/6;
-    const dmg=Math.round(force*1.8);
-    p2.vx+=-d*force; p1.vx+=d*force;
-    if(Math.abs(p1.vx)>Math.abs(p2.vx))hp2=Math.max(0,hp2-dmg);
-    else hp1=Math.max(0,hp1-dmg);
-    p1.pushing=true;p1.pushTimer=8;p1.pushDir=-d;
-    p2.pushing=true;p2.pushTimer=8;p2.pushDir=d;
-    p1.x+=d*2;p2.x-=d*2;
-    playPush(Math.min(spd/4,3));
-    updateHB();
-    if(hp1<=0){roundOver(p1);return;}
-    if(hp2<=0){roundOver(p2);return;}
-  }
-}
-
-function roundOver(loser){
-  gA=false; playFall();
-  setTimeout(()=>{
-    playWin();
-    const isP1Win=loser===p2;
-    if(isP1Win){s1++;document.getElementById('sc1').textContent=s1;}
-    else{s2++;document.getElementById('sc2').textContent=s2;}
-    document.getElementById('wt').textContent=(isP1Win?cfg.n1:cfg.n2)+' Wins!';
-    document.getElementById('ws').textContent='Tap Next Round to continue';
-    document.getElementById('win').classList.add('on');
-    startConfetti();
-  },350);
-}
-
-function closeWin(){
-  document.getElementById('win').classList.remove('on');
-  stopConfetti(); startGame();
-}
-
-function startConfetti(){
-  const el=document.getElementById('cc'),cx=el.getContext('2d');
-  const cols=['#378ADD','#D85A30','#EF9F27','#E24B4A','#1D9E75','#534AB7','#D4537E'];
-  cParts=Array.from({length:80},()=>({
-    x:Math.random()*el.width, y:Math.random()*el.height*0.3-10,
-    vx:(Math.random()-0.5)*3.5, vy:Math.random()*2.5+1,
-    w:Math.random()*9+4, h:Math.random()*5+2,
-    rot:Math.random()*360, rv:(Math.random()-0.5)*7,
-    col:cols[Math.floor(Math.random()*cols.length)], a:1
-  }));
-  function tick(){
-    cx.clearRect(0,0,el.width,el.height);
-    cParts.forEach(p=>{
-      p.x+=p.vx;p.y+=p.vy;p.vy+=0.06;p.rot+=p.rv;
-      if(p.y>el.height)p.a=Math.max(0,p.a-0.05);
-      cx.save();cx.globalAlpha=p.a;cx.translate(p.x,p.y);cx.rotate(p.rot*Math.PI/180);
-      cx.fillStyle=p.col;cx.fillRect(-p.w/2,-p.h/2,p.w,p.h);cx.restore();
-    });
-    cParts=cParts.filter(p=>p.a>0);
-    if(cParts.length>0)cAnim=requestAnimationFrame(tick);
-  }
-  tick();
-}
-function stopConfetti(){
-  if(cAnim)cancelAnimationFrame(cAnim);
-  const el=document.getElementById('cc');
-  el.getContext('2d').clearRect(0,0,el.width,el.height);
-}
-
-function drawStick(p,label,faceI,isP1){
-  ctx.save();
-  const cx=Math.round(p.x+PW/2),top=Math.round(p.y);
-  const hR=10,hY=top+hR,bTop=hY+hR,bBot=top+PH-10,lY=top+PH;
-  ctx.strokeStyle=p.out;ctx.fillStyle=p.col;ctx.lineWidth=2.5;ctx.lineCap='round';
-
-  if(faceI){
-    ctx.save();ctx.beginPath();ctx.arc(cx,hY,hR,0,Math.PI*2);ctx.clip();
-    ctx.drawImage(faceI,cx-hR,hY-hR,hR*2,hR*2);ctx.restore();
-    ctx.beginPath();ctx.arc(cx,hY,hR,0,Math.PI*2);ctx.strokeStyle=p.out;ctx.lineWidth=2;ctx.stroke();
-  } else {
-    ctx.beginPath();ctx.arc(cx,hY,hR,0,Math.PI*2);ctx.fill();ctx.stroke();
-  }
-
-  ctx.strokeStyle=p.out;
-  ctx.beginPath();ctx.moveTo(cx,bTop);ctx.lineTo(cx,bBot);ctx.stroke();
-
-  if(p.pushing){
-    const ad=p.pushDir>0?1:-1;
-    ctx.beginPath();
-    ctx.moveTo(cx,bTop+6);ctx.lineTo(cx+ad*18,bTop+1);
-    ctx.moveTo(cx,bTop+6);ctx.lineTo(cx-ad*8,bTop+14);
-    ctx.stroke();
-  } else {
-    ctx.beginPath();
-    ctx.moveTo(cx-11,bTop+14);ctx.lineTo(cx,bTop+4);ctx.lineTo(cx+11,bTop+14);
-    ctx.stroke();
-  }
-  ctx.beginPath();ctx.moveTo(cx,bBot);ctx.lineTo(cx-10,lY);ctx.moveTo(cx,bBot);ctx.lineTo(cx+10,lY);ctx.stroke();
-
-  if(isP1){
-    const waistY=bBot-4;
-    const dir=p.pushing&&p.pushDir<0?-1:1;
-    const sx=cx+dir*6;
-    if(wi){
-      ctx.save();ctx.translate(sx,waistY);ctx.rotate(dir*0.18);
-      ctx.drawImage(wi,0,-8,44,18);ctx.restore();
-    } else {
-      ctx.strokeStyle='#888780';ctx.lineWidth=3;ctx.lineCap='round';
-      ctx.beginPath();ctx.moveTo(sx,waistY);ctx.lineTo(sx+dir*42,waistY-5);ctx.stroke();
-      ctx.strokeStyle='#B4B2A9';ctx.lineWidth=4;
-      ctx.beginPath();ctx.moveTo(sx+dir*36,waistY-4);ctx.lineTo(sx+dir*42,waistY-5);ctx.stroke();
-    }
-  }
-
-  ctx.fillStyle='#ffffff';ctx.font='bold 11px -apple-system,sans-serif';ctx.textAlign='center';
-  ctx.fillText(label,cx,top-5);
-  ctx.restore();
-}
-
-function draw(){
-  ctx.clearRect(0,0,W,H);
-  ctx.fillStyle='#1a3a5c';
-  ctx.beginPath();
-  if(ctx.roundRect)ctx.roundRect(pX,pY,pW,pH,5);
-  else ctx.rect(pX,pY,pW,pH);
-  ctx.fill();
-  ctx.strokeStyle='#378ADD';ctx.lineWidth=1.5;ctx.stroke();
-  ctx.fillStyle='#1e4a7a';
-  for(let i=pX+22;i<pX+pW-10;i+=30)ctx.fillRect(i,pY+4,14,4);
-  if(p1)drawStick(p1,cfg.n1,fi1,true);
-  if(p2)drawStick(p2,cfg.n2,fi2,false);
-}
-
-const bl=document.getElementById('bl'),br=document.getElementById('br');
-bl.addEventListener('touchstart',e=>{e.preventDefault();keys.left=true;if(!gA)startGame();},{passive:false});
-bl.addEventListener('touchend',e=>{e.preventDefault();keys.left=false;},{passive:false});
-bl.addEventListener('touchcancel',e=>{e.preventDefault();keys.left=false;},{passive:false});
-br.addEventListener('touchstart',e=>{e.preventDefault();keys.right=true;if(!gA)startGame();},{passive:false});
-br.addEventListener('touchend',e=>{e.preventDefault();keys.right=false;},{passive:false});
-br.addEventListener('touchcancel',e=>{e.preventDefault();keys.right=false;},{passive:false});
-
-document.addEventListener('keydown',e=>{
-  if(e.key==='ArrowLeft'||e.key==='a'||e.key==='A'){keys.left=true;if(!gA)startGame();}
-  if(e.key==='ArrowRight'||e.key==='d'||e.key==='D'){keys.right=true;if(!gA)startGame();}
-  if(['ArrowLeft','ArrowRight'].includes(e.key))e.preventDefault();
-});
-document.addEventListener('keyup',e=>{
-  if(e.key==='ArrowLeft'||e.key==='a'||e.key==='A')keys.left=false;
-  if(e.key==='ArrowRight'||e.key==='d'||e.key==='D')keys.right=false;
-});
-
-applyS();
-resetP();
-draw();
-</script>
+    <!-- Link to game file (update the path when you have your game file) -->
+    <script src="game.js"></script>
 </body>
 </html>
